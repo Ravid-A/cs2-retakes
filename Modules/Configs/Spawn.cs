@@ -14,13 +14,13 @@ public class Spawn
         EyeAngles = eyeAngles;
     }
 
-    [JsonConverter(typeof(AbsOriginJsonConverter))]
+    [JsonConverter(typeof(VectorJsonConverter))]
     public Vector AbsOrigin { get; }
     
-    [JsonConverter(typeof(AbsRotationJsonConverter))]
-    public QAngle AbsRotation { get; }
+    [JsonConverter(typeof(NullableQAngleJsonConverter))]
+    public QAngle? AbsRotation { get; }
     
-    [JsonConverter(typeof(EyeAnglesJsonConverter))]
+    [JsonConverter(typeof(NullableQAngleJsonConverter))]
     public QAngle? EyeAngles { get; }
     
     public CsTeam Team { get; set; }

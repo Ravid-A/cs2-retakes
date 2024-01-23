@@ -5,9 +5,9 @@ using CounterStrikeSharp.API.Modules.Utils;
 
 namespace RetakesPlugin.Modules.Configs.JsonConverters;
 
-public class AbsRotationJsonConverter : JsonConverter<QAngle>
+public class NullableQAngleJsonConverter : JsonConverter<QAngle?>
 {
-    public override QAngle Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override QAngle? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.String)
         {
@@ -15,9 +15,9 @@ public class AbsRotationJsonConverter : JsonConverter<QAngle>
         }
 
         var stringValue = reader.GetString();
-        if (stringValue == null)
+        if (stringValue == null || string.IsNullOrWhiteSpace(stringValue))
         {
-            throw new JsonException("String value is null.");
+            return null;
         }
 
         var values = stringValue.Split(' '); // Split by space
@@ -38,8 +38,14 @@ public class AbsRotationJsonConverter : JsonConverter<QAngle>
         return new QAngle(x, y, z);
     }
 
-    public override void Write(Utf8JsonWriter writer, QAngle value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, QAngle? value, JsonSerializerOptions options)
     {
+        if (value == null)
+        {
+            writer.WriteStringValue("");
+            return;
+        }
+        
         // Convert QAngle object to string representation (example assumes ToString() returns desired format)
         var qAngleString = value.ToString();
         writer.WriteStringValue(qAngleString);

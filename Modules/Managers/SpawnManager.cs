@@ -1,4 +1,5 @@
 
+using System.Diagnostics;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Utils;
 using RetakesPlugin.Modules.Configs;
@@ -110,7 +111,12 @@ public class SpawnManager
 
 			var spawn = player == planter ? randomPlanterSpawn : spawns[team][Helpers.Random.Next(count)];
 
-			player.PlayerPawn.Value!.Teleport(spawn.AbsOrigin, spawn.AbsRotation, new Vector());
+			if (spawn.EyeAngles == null && spawn.AbsRotation == null)
+			{
+				throw new Exception($"{RetakesPlugin.LogPrefix}Misconfigured spawn detected!");
+			}
+			
+			player.PlayerPawn.Value!.Teleport(spawn.AbsOrigin, spawn.EyeAngles ?? spawn.AbsRotation, new Vector());
 			spawns[team].Remove(spawn);
 		}
 		Console.WriteLine($"{RetakesPlugin.LogPrefix}Moving players to spawns COMPLETE.");
