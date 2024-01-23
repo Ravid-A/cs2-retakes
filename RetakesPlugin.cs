@@ -284,6 +284,18 @@ public class RetakesPlugin : BasePlugin
 		commandInfo.ReplyToCommand($"{MessagePrefix}{(didRemoveSpawn ? "Spawn removed" : "Error removing spawn")}");
     }
     
+    [ConsoleCommand("css_check")]
+    [CommandHelper(whoCanExecute: CommandUsage.CLIENT_ONLY)]
+    public void OnCommandCheck(CCSPlayerController? player, CommandInfo commandInfo)
+    {
+        if (!Helpers.DoesPlayerHavePawn(player))
+        {
+            return;
+        }
+        
+        commandInfo.ReplyToCommand($"{MessagePrefix}InBombZone: {(player!.PlayerPawn.Value!.InBombZone ? "Yes" : "No")}");
+    }
+    
     [ConsoleCommand("css_debugqueues", "Prints the state of the queues to the console.")]
     [CommandHelper(whoCanExecute: CommandUsage.SERVER_ONLY)]
     [RequiresPermissions("@css/root")]
