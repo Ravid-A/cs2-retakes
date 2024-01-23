@@ -209,11 +209,11 @@ public static class Helpers
 		var color = spawn.Team == CsTeam.Terrorist ? (spawn.CanBePlanter ? Color.Orange : Color.Red) : Color.Blue;
 		beam.Render = Color.FromArgb(255, color);
 
-		beam.EndPos.X = spawn.Vector.X;
-		beam.EndPos.Y = spawn.Vector.Y;
-		beam.EndPos.Z = spawn.Vector.Z + 100.0f;
+		beam.EndPos.X = spawn.AbsOrigin.X;
+		beam.EndPos.Y = spawn.AbsOrigin.Y;
+		beam.EndPos.Z = spawn.AbsOrigin.Z + 100.0f;
 
-		beam.Teleport(spawn.Vector, new QAngle(IntPtr.Zero), new Vector(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero));
+		beam.Teleport(spawn.AbsOrigin, new QAngle(IntPtr.Zero), new Vector(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero));
 		beam.DispatchSpawn();
     }
     

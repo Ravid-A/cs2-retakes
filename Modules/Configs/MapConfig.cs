@@ -70,7 +70,7 @@ public class MapConfig
         
         // Check if the spawn already exists based on vector and bombsite
         if (_mapConfigData.Spawns.Any(existingSpawn =>
-                existingSpawn.Vector == spawn.Vector && existingSpawn.Bombsite == spawn.Bombsite))
+                existingSpawn.AbsOrigin == spawn.AbsOrigin && existingSpawn.Bombsite == spawn.Bombsite))
         {
             return false; // Spawn already exists, avoid duplication
         }
@@ -89,7 +89,7 @@ public class MapConfig
     {
         _mapConfigData ??= new MapConfigData();
         
-        if (!_mapConfigData.Spawns.Any(existingSpawn => existingSpawn.Vector == spawn.Vector && existingSpawn.Bombsite == spawn.Bombsite))
+        if (!_mapConfigData.Spawns.Any(existingSpawn => existingSpawn.AbsOrigin == spawn.AbsOrigin && existingSpawn.Bombsite == spawn.Bombsite))
         {
             return false; // Spawn doesn't exist, avoid removing
         }
@@ -113,7 +113,7 @@ public class MapConfig
         
         // Remove any duplicate spawns in the list
         _mapConfigData.Spawns = _mapConfigData.Spawns
-            .GroupBy(spawn => new {spawn.Vector, spawn.Bombsite})
+            .GroupBy(spawn => new { Vector = spawn.AbsOrigin, spawn.Bombsite})
             .Select(group => group.First())
             .ToList();
 

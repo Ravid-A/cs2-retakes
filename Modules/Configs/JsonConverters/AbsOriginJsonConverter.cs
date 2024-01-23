@@ -5,9 +5,9 @@ using CounterStrikeSharp.API.Modules.Utils;
 
 namespace RetakesPlugin.Modules.Configs.JsonConverters;
 
-public class QAngleJsonConverter : JsonConverter<QAngle>
+public class AbsOriginJsonConverter : JsonConverter<Vector>
 {
-    public override QAngle Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Vector Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.String)
         {
@@ -31,17 +31,17 @@ public class QAngleJsonConverter : JsonConverter<QAngle>
             !float.TryParse(values[1], NumberStyles.Any, CultureInfo.InvariantCulture, out var y) ||
             !float.TryParse(values[2], NumberStyles.Any, CultureInfo.InvariantCulture, out var z))
         {
-            Console.WriteLine($"{RetakesPlugin.LogPrefix}Unable to parse QAngle float values for: {stringValue}");
-            throw new JsonException("Unable to parse QAngle float values.");
+            Console.WriteLine($"{RetakesPlugin.LogPrefix}Unable to parse Vector float values for: {stringValue}");
+            throw new JsonException("Unable to parse Vector float values.");
         }
 
-        return new QAngle(x, y, z);
+        return new Vector(x, y, z);
     }
 
-    public override void Write(Utf8JsonWriter writer, QAngle value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, Vector value, JsonSerializerOptions options)
     {
-        // Convert QAngle object to string representation (example assumes ToString() returns desired format)
-        var qAngleString = value.ToString();
-        writer.WriteStringValue(qAngleString);
+        // Convert Vector object to string representation (example assumes ToString() returns desired format)
+        var vectorString = value.ToString();
+        writer.WriteStringValue(vectorString);
     }
 }

@@ -110,7 +110,7 @@ public class SpawnManager
 
 			var spawn = player == planter ? randomPlanterSpawn : spawns[team][Helpers.Random.Next(count)];
 
-			player.PlayerPawn.Value!.Teleport(spawn.Vector, spawn.QAngle, new Vector());
+			player.PlayerPawn.Value!.Teleport(spawn.AbsOrigin, spawn.AbsRotation, new Vector());
 			spawns[team].Remove(spawn);
 		}
 		Console.WriteLine($"{RetakesPlugin.LogPrefix}Moving players to spawns COMPLETE.");

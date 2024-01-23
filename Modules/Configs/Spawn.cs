@@ -7,17 +7,22 @@ namespace RetakesPlugin.Modules.Configs;
 
 public class Spawn
 {
-    public Spawn(Vector vector, QAngle qAngle)
+    public Spawn(Vector absOrigin, QAngle absRotation, QAngle? eyeAngles = null)
     {
-        Vector = vector;
-        QAngle = qAngle;
+        AbsOrigin = absOrigin;
+        AbsRotation = absRotation;
+        EyeAngles = eyeAngles;
     }
 
-    [JsonConverter(typeof(VectorJsonConverter))]
-    public Vector Vector { get; }
+    [JsonConverter(typeof(AbsOriginJsonConverter))]
+    public Vector AbsOrigin { get; }
     
-    [JsonConverter(typeof(QAngleJsonConverter))]
-    public QAngle QAngle { get; }
+    [JsonConverter(typeof(AbsRotationJsonConverter))]
+    public QAngle AbsRotation { get; }
+    
+    [JsonConverter(typeof(EyeAnglesJsonConverter))]
+    public QAngle? EyeAngles { get; }
+    
     public CsTeam Team { get; set; }
     public Bombsite Bombsite { get; set; }
     public bool CanBePlanter { get; set; }

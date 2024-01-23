@@ -155,7 +155,7 @@ public class RetakesPlugin : BasePlugin
 
         foreach (var spawn in spawns)
         {
-            var distance = Helpers.GetDistanceBetweenVectors(spawn.Vector, player!.PlayerPawn.Value!.AbsOrigin!);
+            var distance = Helpers.GetDistanceBetweenVectors(spawn.AbsOrigin, player!.PlayerPawn.Value!.AbsOrigin!);
 
             if (distance > 128.0 || distance > closestDistance)
             {
@@ -172,8 +172,8 @@ public class RetakesPlugin : BasePlugin
         }
 
         var newSpawn = new Spawn(
-            vector: player!.PlayerPawn.Value!.AbsOrigin!,
-            qAngle: player!.PlayerPawn.Value!.AbsRotation!
+            absOrigin: player!.PlayerPawn.Value!.AbsOrigin!,
+            absRotation: player!.PlayerPawn.Value!.AbsRotation!
         )
         {
             Team = team == "T" ? CsTeam.Terrorist : CsTeam.CounterTerrorist,
@@ -238,7 +238,7 @@ public class RetakesPlugin : BasePlugin
 
         foreach (var spawn in spawns)
         {
-			var distance = Helpers.GetDistanceBetweenVectors(spawn.Vector, player!.PlayerPawn.Value!.AbsOrigin!);
+			var distance = Helpers.GetDistanceBetweenVectors(spawn.AbsOrigin, player!.PlayerPawn.Value!.AbsOrigin!);
 
 			if (distance > 128.0 || distance > closestDistance)
 			{
@@ -265,9 +265,9 @@ public class RetakesPlugin : BasePlugin
             }
             
             if (
-                beamEntity.AbsOrigin.Z - closestSpawn.Vector.Z == 0 &&
-                beamEntity.AbsOrigin.X - closestSpawn.Vector.X == 0 &&
-                beamEntity.AbsOrigin.Y - closestSpawn.Vector.Y == 0
+                beamEntity.AbsOrigin.Z - closestSpawn.AbsOrigin.Z == 0 &&
+                beamEntity.AbsOrigin.X - closestSpawn.AbsOrigin.X == 0 &&
+                beamEntity.AbsOrigin.Y - closestSpawn.AbsOrigin.Y == 0
             )
             {
                 beamEntity.Remove();
