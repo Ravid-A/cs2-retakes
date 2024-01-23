@@ -111,12 +111,13 @@ public class SpawnManager
 
 			var spawn = player == planter ? randomPlanterSpawn : spawns[team][Helpers.Random.Next(count)];
 
-			if (spawn.EyeAngles == null && spawn.AbsRotation == null)
+			var angles = spawn.EyeAngles ?? spawn.AbsRotation;
+			if (angles == null)
 			{
 				throw new Exception($"{RetakesPlugin.LogPrefix}Misconfigured spawn detected!");
 			}
 			
-			player.PlayerPawn.Value!.Teleport(spawn.AbsOrigin, spawn.EyeAngles ?? spawn.AbsRotation, new Vector());
+			player.PlayerPawn.Value!.Teleport(spawn.AbsOrigin, angles, new Vector());
 			spawns[team].Remove(spawn);
 		}
 		Console.WriteLine($"{RetakesPlugin.LogPrefix}Moving players to spawns COMPLETE.");
